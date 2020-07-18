@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <div>
-      <PrimaryButton>
-        Cat can fly
-      </PrimaryButton>
-    </div>
+     <router-view></router-view>
   </v-app>
 </template>
 
