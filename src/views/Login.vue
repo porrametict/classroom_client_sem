@@ -48,7 +48,7 @@
                         </v-card-text>
                         <v-card-actions class="my-0 py-0">
                             <v-btn
-                                    color="sky"
+                                    color="c_sky"
                                     x-large
                                     rounded
                                     block
