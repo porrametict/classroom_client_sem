@@ -2,12 +2,12 @@
     <div>
         <!--header-->
         <div>
-            <h1 class="text-center" @click="$router.push({name:'CreateCourse'})">Course</h1>
+            <h1 class="text-center" >Course</h1>
         </div>
         <!--content-->
         <div>
             <div>
-                <PrimaryButton>Add Course</PrimaryButton>
+                <PrimaryButton @click="$router.push({name:'CreateCourse'})">Add Course</PrimaryButton>
             </div>
             <div class="my-3">
                 <template>
