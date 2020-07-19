@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--        ConfirmDialog-->
         <div class="text-center">
             <p class="title">
                 Confirm dialog
@@ -61,20 +62,39 @@
         </div>
         <hr/>
 
+        <!-- TimePickerInput -->
+        <div class="text-center">
+            <h1 class="title">Time Picker</h1>
+            <TimePickerInput
+                    label="start"
+                    @change="cat_alert"
+            >
+            </TimePickerInput>
+            set value
+            <TimePickerInput
+                    label="end"
+                    @change="cat_alert"
+                    :time_value="'11:03'"
+            >
+            </TimePickerInput>
+
+        </div>
+
     </div>
 </template>
 
 <script>
     import ConfirmDialog from "../components/share/ConfirmDialog";
     import Template from "./Template";
+    import TimePickerInput from "../components/share/TimePickerInput";
 
     export default {
         name: "HowToUseComponent",
-        components: {Template, ConfirmDialog},
-        methods : {
-            cat_alert (e) {
+        components: {TimePickerInput, Template, ConfirmDialog},
+        methods: {
+            cat_alert(e) {
                 alert('result is ' + e)
-            }
+            },
         }
     }
 </script>
