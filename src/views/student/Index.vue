@@ -5,8 +5,16 @@
                 :headers="headers"
                 :items="desserts"
                 :items-per-page="5"
-                class="elevation-1"
-        ></v-data-table>
+                class="elevation-1">
+        <template v-slot:item.actions="{ item }">
+            <v-btn icon>
+                <v-icon @click="" color="orange lighten-2">mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn icon>
+                <v-icon @click="" color="red">mdi-delete</v-icon>
+            </v-btn >
+        </template>
+        </v-data-table>
     </div>
 </template>
 
@@ -21,7 +29,7 @@
                     { text: 'Student ID', value: 'student_id' ,align: 'start'},
                     { text: 'Full Name', value: 'fullName' },
                     { text: 'Course', value: 'courseName' },
-                    { text: 'Manage' },
+                    { text: 'Actions', value: 'actions', sortable: false },
                 ],
                 desserts: [
                     {
