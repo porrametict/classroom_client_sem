@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PrimaryButton @click="$router.push({name:'createStudent'})">Add Student</PrimaryButton>
+        <PrimaryButton @click="$router.push({name:'CreateStudent'})">Add Student</PrimaryButton>
         <v-data-table
                 :headers="headers"
                 :items="desserts"
