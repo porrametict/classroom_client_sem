@@ -1,18 +1,23 @@
 <template>
     <div>
         <v-btn
-                color="primary"
+                color="grey lighten-1"
                 @click="$emit('click')"
                 rounded
         >
             <slot>
-                Primary
+                Cancel
             </slot>
         </v-btn>
     </div>
 </template>
+
 <script>
     export default {
-        name: "PrimaryButton",
+        name: "CancelButton"
     }
 </script>
+
+<style scoped>
+
+</style>

@@ -19,6 +19,11 @@ const routes = [
             course
         ]
     },
+    {
+        path: '/hc',
+        name: 'hc',
+        component: () => import('../views/HowToUseComponent.vue')
+    },
 ]
 
 const router = new VueRouter({
