@@ -4,64 +4,16 @@
       <div class="d-flex flex-column flex-grow-1 pa-5">
         <h1 class="display-3 text-center my-5">Add Course</h1>
         <div class="d-flex justify-space-around align-center flex-wrap">
-          <v-row justify="space-around" align="center"  class="d-flex">
-            <v-col >
+          <v-row justify="space-around" align="center" class="d-flex">
+            <v-col>
               <v-text-field label="Course Name" v-model="form.course_name" filled rounded dense></v-text-field>
               <v-text-field label="Teacher Name" v-model="form.teacher_name" filled rounded dense></v-text-field>
-              <v-col class="d-flex flex-column flex-md-row" >
-                <v-select :items="days" label="day" filled rounded dense></v-select>
-                <v-spacer></v-spacer>
-                <v-dialog
-                  ref="dialog"
-                  v-model="start"
-                  :return-value.sync="time_start"
-                  persistent
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="time_start"
-                      label="Start"
-                      filled
-                      rounded
-                      dense
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-time-picker v-if="start" v-model="time_start" full-width>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="start = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.dialog.save(time_start)">OK</v-btn>
-                  </v-time-picker>
-                </v-dialog>
-                <v-spacer></v-spacer>
-                <v-dialog
-                  ref="dialog"
-                  v-model="end"
-                  :return-value.sync="time_end"
-                  persistent
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="time_end"
-                      label="End"
-                      filled
-                      rounded
-                      dense
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-time-picker v-if="end" v-model="time_end" full-width>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="end = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.dialog.save(time_end)">OK</v-btn>
-                  </v-time-picker>
-                </v-dialog>
+
+              <v-select :items="days" label="day" filled rounded dense></v-select>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex flex-column flex-md-row">
+                <time-picker-input label="Start" v-model="time_start"></time-picker-input>
+                <time-picker-input label="End" v-model="time_end"></time-picker-input>
               </v-col>
             </v-col>
           </v-row>
@@ -74,8 +26,8 @@
         </div>
         <div class="ma-10">
           <div class="d-flex justify-space-around flex-wrap">
-            <primary-button @click="createCourse">Save</primary-button>
-            <primary-button @click="createCourse">Cancel</primary-button>
+            <save-button @click="createCourse"></save-button>
+            <cancel-button @click="$router.go(-1)"></cancel-button>
           </div>
         </div>
       </div>
@@ -86,10 +38,18 @@
 
 <script>
 import PrimaryButton from "@/components/share/PrimaryButton";
+import TimePickerInput from "@/components/share/TimePickerInput";
+import SaveButton from "@/components/share/SaveButton";
+import CancelButton from "@/components/share/CancelButton";
+import ConfirmDialog from "@/components/share/ConfirmDialog";
 export default {
   name: "CreateCourse",
   components: {
-    PrimaryButton
+    PrimaryButton,
+    TimePickerInput,
+    SaveButton,
+    CancelButton,
+    ConfirmDialog
   },
   data() {
     return {
@@ -108,19 +68,18 @@ export default {
         "SATURDAY"
       ],
       form: {
-        course_name: "",
-        teacher_name: ""
+        course_name: " ",
+        teacher_name: " ",
+        status
       }
     };
   },
   methods: {
     async createCourse() {
-      let data = await this.$store.dispatch("Course/create", this.form);
+      let data = await this.$store.dispatch("course/Create", this.form);
       if (data) {
-        alert("create success");
         await this.$router.push({ name: "IndexCourse" });
       } else {
-        alert("create failed");
       }
     }
   }

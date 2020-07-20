@@ -15,7 +15,7 @@ export default   {
 
         },
         {
-            path: 'edit',
+            path: ':id/edit',
             name: 'EditCourse',
             component: () => import(/* webpackChunkName: "about" */ '../views/course/Edit.vue')
 
