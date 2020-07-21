@@ -12,7 +12,7 @@
             <div>
                 <PrimaryButton @click="$router.push({name:'CreateCourse'})">Add Course</PrimaryButton>
             </div>
-            <div class="my-3">
+            <div >
                 <template>
                     <v-data-table
                             :headers="headers"

@@ -1,6 +1,5 @@
 <template>
     <div>
-<<<<<<< HEAD
         <!-- title-->
         <div class="d-flex justify-space-around flex-wrap">
             <h1>Add Student</h1>
@@ -91,21 +90,22 @@
                 <v-btn color="gary" >CANCEL</v-btn>
             </div>
         </div>
-=======
         Add student
         <save-button></save-button>
         <cancel-button></cancel-button>
->>>>>>> 6fe9c4134c16f0c3ced467e58999b14113405b55
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-    import Index from '../course/Index'
+    import Index from '../course/Index';
+    import SaveButton from "../../components/share/SaveButton";
+    import CancelButton from "../../components/share/CancelButton";
     export default {
         name: "createStudent",
         components: {
             Index,
+            SaveButton,
+            CancelButton
         },
         data: vm => ({
             date: new Date().toISOString().substr(0, 10),
@@ -138,13 +138,8 @@
                 return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
             },
         },
-=======
-    import SaveButton from "../../components/share/SaveButton";
-    import CancelButton from "../../components/share/CancelButton";
-    export default {
-        name: "createStudent",
-        components:{SaveButton,CancelButton}
->>>>>>> 6fe9c4134c16f0c3ced467e58999b14113405b55
+    
+    
     }
 </script>
 
