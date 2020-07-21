@@ -1,12 +1,5 @@
 <template>
-
     <div>
-         
-        <h1>Course list page</h1>
-        <!--header-->
-        <div>
-            <h1 class="text-center" >Course</h1>
-        </div>
         <!--content-->
         <div>
             <div>
@@ -21,9 +14,13 @@
                             hide-default-footer
                     >
                         <template v-slot:item.manage="{item}">
-                            <v-btn icon @click="gotoEdit(item)">
-                                <v-icon>mdi-pencil</v-icon>
-                            </v-btn>
+                            <div class="d-flex">
+                                <v-btn icon color="orange lighten-2" @click="gotoEdit(item)">
+                                    <v-icon>mdi-pencil</v-icon>
+                                </v-btn>
+                                <DeleteDialog></DeleteDialog>
+                            </div>
+
                         </template>
                     </v-data-table>
                 </template>
@@ -35,10 +32,11 @@
 <script>
     import PrimaryButton from "../../components/share/PrimaryButton";
     import Template from "../Template";
+    import DeleteDialog from "../../components/share/DeleteDialog";
 
     export default {
         name: "CourseIndex",
-        components: {Template, PrimaryButton},
+        components: {DeleteDialog, Template, PrimaryButton},
         data() {
             return {
                 headers: [
@@ -58,7 +56,7 @@
                         course_id: 'Csc101',
                         name: "software introduction",
                         teacher: "David",
-                        status: 1,
+                        status: "Available",
                     }
                 ],
 
@@ -75,7 +73,6 @@
             },
         }
     }
-    
 </script>
 
 <style scoped>
