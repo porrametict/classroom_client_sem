@@ -87,19 +87,28 @@
         <div class="ma-5">
             <div class="d-flex justify-space-around flex-wrap">
                 <v-btn color="green accent-4">SAVE</v-btn>
-                <v-btn color="gary" >CANCEL</v-btn>
+                <v-btn color="gary">CANCEL</v-btn>
             </div>
         </div>
+<<<<<<< HEAD
         Add student
         <save-button></save-button>
         <cancel-button></cancel-button>
+=======
+
+>>>>>>> 0fc2e2aa1dad2ac46319aabd64f478809092aaef
     </div>
 </template>
 
 <script>
+<<<<<<< HEAD
     import Index from '../course/Index';
     import SaveButton from "../../components/share/SaveButton";
     import CancelButton from "../../components/share/CancelButton";
+=======
+    import Index from '../course/Index'
+
+>>>>>>> 0fc2e2aa1dad2ac46319aabd64f478809092aaef
     export default {
         name: "createStudent",
         components: {
@@ -113,33 +122,36 @@
             menu1: false,
         }),
         computed: {
-            computedDateFormatted () {
+            computedDateFormatted() {
                 return this.formatDate(this.date)
             },
         },
 
         watch: {
-            date (val) {
+            date(val) {
                 this.dateFormatted = this.formatDate(this.date)
             },
         },
 
         methods: {
-            formatDate (date) {
+            formatDate(date) {
                 if (!date) return null
 
                 const [year, month, day] = date.split('-')
                 return `${month}/${day}/${year}`
             },
-            parseDate (date) {
+            parseDate(date) {
                 if (!date) return null
 
                 const [month, day, year] = date.split('/')
                 return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
             },
         },
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> 0fc2e2aa1dad2ac46319aabd64f478809092aaef
     }
 </script>
 
