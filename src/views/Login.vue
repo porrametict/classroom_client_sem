@@ -29,19 +29,27 @@
                                         v-model="form.username"
                                         :rules="[rules.required]"
 
+                                        :error-messages="error.username"
+
+
                                 ></v-text-field>
 
                                 <v-text-field
                                         outlined
                                         rounded
                                         label="Password"
-                                        :type="show_password ? 'password' : 'text'"
+                                        :type="show_password ? 'text' : 'password'"
                                         prepend-inner-icon="mdi-lock"
-                                        :append-icon="!show_password ? 'mdi-eye': 'mdi-eye-off'"
+                                        :append-icon="show_password ? 'mdi-eye': 'mdi-eye-off'"
                                         @click:append="show_password = !show_password"
+                                        @keypress.13="login"
 
                                         v-model="form.password"
                                         :rules="[rules.required]"
+
+
+                                        :error-messages="error.password"
+
 
                                 ></v-text-field>
                             </v-form>
@@ -65,17 +73,19 @@
 </template>
 
 <script>
+    import Base from "../components/share/Base"
     import PrimaryButton from "../components/share/PrimaryButton";
 
     export default {
         name: "Login",
+        extends: Base,
         components: {PrimaryButton},
         data() {
             return {
                 show_password: false,
                 form: {
-                    username: null,
-                    password: null
+                    username: 'admin',
+                    password: 'password'
                 },
                 rules: {
                     required: value => !!value || 'Required'
@@ -84,7 +94,7 @@
         },
         methods: {
             async login() {
-                let data = true
+                let data = await this.$store.dispatch('user/getUserToken', this.form)
                 if (data) {
                     await this.$router.push({name: 'IndexStudent'})
                 }
