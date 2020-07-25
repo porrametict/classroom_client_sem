@@ -12,6 +12,7 @@
           readonly
           v-bind="attrs"
           v-on="on"
+          :rules="rules"
         ></v-text-field>
       </template>
       <v-time-picker v-if="dialog" v-model="time" full-width>
@@ -31,6 +32,10 @@ export default {
     time: null
   }),
   props: {
+    rules: {
+      type: Array,
+      require: true
+    },
     label: {
       type: String,
       require: false,
