@@ -3,8 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import Axios from 'axios'
 
 Vue.config.productionTip = false
+
+const baseURL = 'http://127.0.0.1:8000'
+window.axios = new Axios.create({
+  baseURL: baseURL,
+  timeout: 60000
+})
+if (localStorage.getItem('access_token')) {
+  window.axios.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem('access_token')}`;
+}
 
 new Vue({
   router,
