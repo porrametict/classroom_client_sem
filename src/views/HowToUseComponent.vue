@@ -40,28 +40,20 @@
                     >
                         delete
                     </v-btn>
-
                 </template>
-
                 <template v-slot:secondary_btn="{on}">
                     <v-btn
                             color="c_grey"
                             rounded
                             v-on="on"
                             class="px-5"
-
                     >
                         Cancel
                     </v-btn>
-
                 </template>
-
             </ConfirmDialog>
-
-
         </div>
         <hr/>
-
         <!-- TimePickerInput -->
         <div class="text-center">
             <h1 class="title">Time Picker</h1>
@@ -77,7 +69,14 @@
                     :time_value="'11:03'"
             >
             </TimePickerInput>
-
+        </div>
+<!-- Date Picker -->
+        <div class="text-center">
+            <h1 class="title">Date Picker</h1>
+            <DatePickerInput
+                    label="Date select"
+                    @change="cat_alert">
+            </DatePickerInput>
         </div>
 
     </div>
@@ -87,10 +86,10 @@
     import ConfirmDialog from "../components/share/ConfirmDialog";
     import Template from "./Template";
     import TimePickerInput from "../components/share/TimePickerInput";
-
+    import DatePickerInput from "../components/share/DatePickerInput";
     export default {
         name: "HowToUseComponent",
-        components: {TimePickerInput, Template, ConfirmDialog},
+        components: {DatePickerInput, TimePickerInput, Template, ConfirmDialog},
         methods: {
             cat_alert(e) {
                 alert('result is ' + e)
