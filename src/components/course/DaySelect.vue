@@ -9,6 +9,7 @@
             :rules="rules"
             v-model="item"
             @change="dayChange"
+            :error="error"
 
     ></v-select>
 </template>
@@ -20,6 +21,10 @@
             event: 'change'
         },
         props: {
+            error : {
+                type : Array,
+                require : false
+            },
             value: {
                 type: Number,
                 require: false,

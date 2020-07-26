@@ -19,11 +19,15 @@ export default {
         setError({state, commit}, error) {
             error = _.map(error, (value, key) => {
                 let x = {}
-                if (typeof (value) === typeof ([])) {
+                if (!value[0]){
+                        for (let k in value) {
+                            x[k] = (value[k])
+                        }
+                }
+                else if (typeof (value) === typeof ([]) ) {
                     x[key] = value[0]
-
-                } else {
-
+                }
+                else {
                     x[key] = value
                 }
                 return x

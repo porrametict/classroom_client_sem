@@ -10,6 +10,7 @@
                     <v-text-field
                             label="Course Name"
                             filled rounded dense
+                            v-model="form.name"
                             :rules="[rules.required]"
 
                             :error="error.name"
@@ -18,15 +19,16 @@
                     <v-text-field
                             label="Teacher Name"
                             filled rounded dense
+                            v-model="form.teacher_name"
                             :rules="[rules.required]"
                             :error="error.teacher_name"
 
 
                     ></v-text-field>
                     <DaySelect
-                            v-model="form.day"
+                            v-model="form.teaching_period.day"
                             :rules="[rules.required]"
-                            :error="error.name"
+                            :error="error.day"
 
                     ></DaySelect>
 
@@ -36,13 +38,16 @@
 
                         <time-picker-input
                                 label="Start"
-                                @change="form.start_time = $event"
+                                @change="form.teaching_period.start_time = $event"
                                 :rules="[rules.required]"
+                                :error="error.start_time"
                         ></time-picker-input>
                         <time-picker-input
                                 label="End"
-                                @change="form.end_time = $event"
+                                @change="form.teaching_period.end_time = $event"
                                 :rules="[rules.required]"
+                                :error="error.end_time"
+
                         ></time-picker-input>
                     </v-col>
                     <h1>
@@ -94,9 +99,11 @@
                     name: null,
                     teacher_name: null,
                     status: true,
-                    day: 1,
-                    start_time: null,
-                    end_time: null,
+                    teaching_period : {
+                        day: 1,
+                        start_time: null,
+                        end_time: null,
+                    }
                 }
             };
         },
