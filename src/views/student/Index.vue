@@ -1,71 +1,130 @@
 <template>
     <div>
-        <PrimaryButton @click="$router.push({name:'CreateStudent'})">Add Student</PrimaryButton>
-        <v-data-table
-                :headers="headers"
-                :items="desserts"
-                :items-per-page="5"
-                class="elevation-1">
-            <template v-slot:item.actions="{ item }">
-                <div class="d-flex">
-                    <v-btn icon>
-                        <v-icon color="orange lighten-2" @click="$router.push({name:'EditStudent'})">mdi-pencil</v-icon>
-                    </v-btn>
-                    <DeleteDialog></DeleteDialog>
-                </div>
+        <!--button-->
+        <div>
+            <PrimaryButton @click="$router.push({name:'CreateStudent'})">Add Student</PrimaryButton>
+        </div>
 
-            </template>
-        </v-data-table>
+        <!--table-->
+        <div>
+            <v-data-table
+                    :headers="headers_student"
+                    :items="student"
+                    :items-per-page="10"
+                    class="elevation-1"
+                    hide-default-footer
+            >
+
+                <template v-slot:item.id="{item}">
+                    {{item.id.student_id}}
+                </template>
+
+                <template v-slot:item.user="{item}">
+                    {{item.user.name}}
+                </template>
+
+
+                <template v-slot:item.course="{item}">
+                    {{item.course.course_id}}
+                </template>
+
+                <template v-slot:item.actions="{item}">
+                        <div class="d-flex align-center">
+                            <v-btn
+                                icon
+                                color="orange lighten-2"
+                                @click="$router.push({name:'EditStudent'})"
+                            >
+                                <v-icon>mdi-pencil</v-icon>
+                            </v-btn>
+                            <delete-dialog @change="deleteStudent($event,item)"></delete-dialog>
+                        </div>
+                </template>
+
+            </v-data-table>
+
+            <div class="text-center">
+                <v-pagination
+                        v-model="form_params.page"
+                        :length="form_params.length"
+                        circle
+                        @input="changePage"
+                ></v-pagination>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import PrimaryButton from "../../components/share/PrimaryButton";
     import DeleteDialog from "../../components/share/DeleteDialog";
+    import Template from "../Template";
 
     export default {
         name: "StudentIndex",
-        components: {DeleteDialog, PrimaryButton},
+        components: {Template, DeleteDialog, PrimaryButton},
         data() {
             return {
-                headers: [
-                    {text: 'Student ID', value: 'student_id', align: 'start'},
-                    {text: 'Full Name', value: 'fullName'},
-                    {text: 'Course', value: 'courseName'},
-                    {text: 'Actions', value: 'actions', sortable: false},
-                ],
-                desserts: [
+                student: [],
+                form_params: {
+                    search: null,
+                    page: 1,
+                    length: 0,
+                },
+                form: {
+                    student_id: "",
+                    name: "",
+                    course_id: ""
+                },
+                headers_student: [
                     {
-                        student_id: '001',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
+                        text: 'Student ID',
+                        align: 'start',
+                        value: 'student_id',
                     },
                     {
-                        student_id: '002',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
+                        text: 'Full Name',
+                        align: 'start',
+                        value: 'name',
                     },
                     {
-                        student_id: '003',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '004',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '005',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '006',
-                        fullName: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
+                        text: 'Course',
+                        align: 'start',
+                        value: 'course_id',
                     },
-
+                    {
+                        text: 'Actions',
+                        align: 'start',
+                        value: 'actions',
+                        sortable: false,
+                    },
                 ],
             }
         },
+        mounted() {
+            this.loadData()
+        },
+        methods: {
+            async loadData() {
+                let data = await this.$store.dispatch('student/getStudents', this.form_params)
+                this.form_params.length = Math.ceil(data.count/10)
+                this.student = data.results
+            },
+            changePage(page){
+              this.form_params.page = page
+                this.loadData()
+            },
+            async deleteStudent(e, item){
+                console.log(e,"e",item)
+                if (e) {
+                    let data = await this.$store.dispatch('student/deleteStudent', item.id)
+                    if (data != null) {
+                        await this.loadData()
+                    }
+                }
+            },
+        }
+
     }
 </script>
 

@@ -7,7 +7,13 @@
       </div>
       <div>
         <template>
-          <v-data-table v-if="Courses" :headers="headers" :items="Courses" class="elevation-1">
+          <v-data-table
+            v-if="Courses"
+            :headers="headers"
+            :items="Courses"
+            class="elevation-1"
+            hide-default-footer
+          >
             <template v-slot:item.actions="{ item }">
               <div class="d-flex">
                 <v-btn icon>
@@ -19,13 +25,13 @@
                 <DeleteDialog @change="deleteCourse($event,item)"></DeleteDialog>
               </div>
             </template>
-            <v-pagination
-              v-model="form_param.page"
-              :length="form_param.length"
-              circle
-              
-            ></v-pagination>
           </v-data-table>
+          <v-pagination
+            v-model="form_param.page"
+            :length="form_param.length"
+            circle
+            @input="changePage"
+          ></v-pagination>
         </template>
       </div>
     </div>
@@ -73,6 +79,11 @@ export default {
         }
       }
     },
+
+  changePage(page) {
+    this.form_param.page = page;
+    this.getCourse();
+  },
   }
 };
 </script>

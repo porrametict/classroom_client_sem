@@ -7,6 +7,7 @@ import error from "./modules/error";
 import student from "./modules/student";
 import course from "./modules/course";
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
