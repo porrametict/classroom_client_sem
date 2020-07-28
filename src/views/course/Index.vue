@@ -14,6 +14,9 @@
             class="elevation-1"
             hide-default-footer
           >
+           <template v-slot:item.status="{ item }">
+            {{item.status ? 'Avaliable':'Unvaliable'}}
+            </template> 
             <template v-slot:item.actions="{ item }">
               <div class="d-flex">
                 <v-btn icon>
