@@ -84,7 +84,7 @@
 
   export default {
     extends: Base,
-    name: "CreateCourse",
+    name: "EditCourse",
     components: {
       DaySelect,
       PrimaryButton,
