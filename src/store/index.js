@@ -7,7 +7,6 @@ import error from "./modules/error";
 import student from "./modules/student";
 import course from "./modules/course";
 
-import student from "./student/student";
 
 Vue.use(Vuex)
 

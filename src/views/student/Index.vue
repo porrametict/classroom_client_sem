@@ -10,60 +10,47 @@
             <v-data-table
                     :headers="headers_student"
                     :items="student"
-                    :items-per-page="5"
+                    :items-per-page="10"
                     class="elevation-1"
+                    hide-default-footer
             >
 
-                <template v-slot:item.Student ID="{item}">
-                    {{item.user.id}}
+                <template v-slot:item.id="{item}">
+                    {{item.id.student_id}}
                 </template>
 
-                <template v-slot:item.Fullname="{item}">
+                <template v-slot:item.user="{item}">
                     {{item.user.name}}
                 </template>
 
 
-                <template v-slot:item.Course="{item}">
-                    {{item.user.courseName}}
+                <template v-slot:item.course="{item}">
+                    {{item.course.course_id}}
                 </template>
 
-                <template v-slot:item.actions="{on}">
-                    <v-btn
-                            icon
-                            v-on="on"
-                            color="orange lighten-2"
-                            @click="$router.push({name:'EditStudent'})"
-                    >
-                        <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                </template>
-
-                <template v-slot:item.manage="{ item }">
-                    <ConfirmDialog
-                            message="Are you delete?">
-<!--                            @change="delete_student($event,item)"-->
-
-                        <template v-slot:activator="{on}">
+                <template v-slot:item.actions="{item}">
+                        <div class="d-flex align-center">
                             <v-btn
-                                    icon
-                                    v-on="on"
-                                    color="red"
+                                icon
+                                color="orange lighten-2"
+                                @click="$router.push({name:'EditStudent'})"
                             >
-                                <v-icon>mdi-delete</v-icon>
+                                <v-icon>mdi-pencil</v-icon>
                             </v-btn>
-                        </template>
-                    </ConfirmDialog>
+                            <delete-dialog @change="deleteStudent($event,item)"></delete-dialog>
+                        </div>
                 </template>
 
-<!--                <template v-slot:item.actions="{ item }">-->
-<!--                    <v-btn icon>-->
-<!--                        <v-icon @click="" color="orange lighten-2">mdi-pencil</v-icon>-->
-<!--                    </v-btn>-->
-<!--                    <v-btn icon>-->
-<!--                        <v-icon @click="" color="red">mdi-delete</v-icon>-->
-<!--                    </v-btn >-->
-<!--                </template>-->
             </v-data-table>
+
+            <div class="text-center">
+                <v-pagination
+                        v-model="form_params.page"
+                        :length="form_params.length"
+                        circle
+                        @input="changePage"
+                ></v-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -71,13 +58,24 @@
 <script>
     import PrimaryButton from "../../components/share/PrimaryButton";
     import DeleteDialog from "../../components/share/DeleteDialog";
+    import Template from "../Template";
 
     export default {
         name: "StudentIndex",
-        components: {DeleteDialog, PrimaryButton},
+        components: {Template, DeleteDialog, PrimaryButton},
         data() {
             return {
-                // student: null,
+                student: [],
+                form_params: {
+                    search: null,
+                    page: 1,
+                    length: 0,
+                },
+                form: {
+                    student_id: "",
+                    name: "",
+                    course_id: ""
+                },
                 headers_student: [
                     {
                         text: 'Student ID',
@@ -92,7 +90,7 @@
                     {
                         text: 'Course',
                         align: 'start',
-                        value: 'courseName',
+                        value: 'course_id',
                     },
                     {
                         text: 'Actions',
@@ -101,56 +99,32 @@
                         sortable: false,
                     },
                 ],
-                student: [
-                    {
-                        student_id: '001',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    },
-                    {
-                        student_id: '002',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    },
-                    {
-                        student_id: '003',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '004',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '005',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    }, {
-                        student_id: '006',
-                        name: 'Frozen Yogurt',
-                        courseName: 'Basic SA',
-                    },
-
-                ],
             }
         },
-        // mounted() {
-        //     this.loadData()
-        // },
-        // methods: {
-        //     async loadData() {
-        //         let data = await this.$store.dispatch('student/getListStudent')
-        //         this.student = data.results
-        //     },
-        // },
-        // async delete_student(e, item) {
-        //     if (e) {
-        //         let data = await this.$store.dispatch('student/deleteStudent', item.id)
-        //         if (data != null) {
-        //             await this.loadData()
-        //         }
-        //     }
-        //
-        // },
+        mounted() {
+            this.loadData()
+        },
+        methods: {
+            async loadData() {
+                let data = await this.$store.dispatch('student/getStudents', this.form_params)
+                this.form_params.length = Math.ceil(data.count/10)
+                this.student = data.results
+            },
+            changePage(page){
+              this.form_params.page = page
+                this.loadData()
+            },
+            async deleteStudent(e, item){
+                console.log(e,"e",item)
+                if (e) {
+                    let data = await this.$store.dispatch('student/deleteStudent', item.id)
+                    if (data != null) {
+                        await this.loadData()
+                    }
+                }
+            },
+        }
+
     }
 </script>
 
