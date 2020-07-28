@@ -17,10 +17,7 @@
             <template v-slot:item.actions="{ item }">
               <div class="d-flex">
                 <v-btn icon>
-                  <v-icon
-                    color="orange lighten-2"
-                    @click="$router.push({name:'EditCourse'})"
-                  >mdi-pencil</v-icon>
+                  <v-icon color="orange lighten-2" @click="gotoEdit(item.id)">mdi-pencil</v-icon>
                 </v-btn>
                 <DeleteDialog @change="deleteCourse($event,item)"></DeleteDialog>
               </div>
@@ -79,12 +76,20 @@ export default {
         }
       }
     },
+    gotoEdit(id) {
+      this.$router.push({
+        name: 'EditCourse',
+        params: {
+          id: id,
+        },
+      });
+    },
 
-  changePage(page) {
-    this.form_param.page = page;
-    this.getCourse();
+    changePage(page) {
+      this.form_param.page = page;
+      this.getCourse();
+    },
   },
-  }
 };
 </script>
 
