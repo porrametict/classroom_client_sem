@@ -5,6 +5,11 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import Axios from 'axios'
 
+const moment =require('moment')
+require('moment/locale/th');
+moment.locale('th')
+window.moment = moment;
+Vue.use(require('vue-moment'),{moment,});
 
 Vue.config.productionTip = false
 
