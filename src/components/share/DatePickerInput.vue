@@ -32,6 +32,10 @@
             date: null,
         }),
         props: {
+          error : {
+            type : Array,
+            require : false
+          },
             rules: {
                 type: Array,
                 require: true
