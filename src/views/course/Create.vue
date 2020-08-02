@@ -22,8 +22,6 @@
                             v-model="form.teacher_name"
                             :rules="[rules.required]"
                             :error="error.teacher_name"
-
-
                     ></v-text-field>
                     <DaySelect
                             v-model="form.teaching_period.day"

@@ -1,4 +1,5 @@
 const course_api = 'api/v1/course/'
+const course_api_no_page = 'api/v1/course-no-paginate/'
 export default {
     namespaced: true,
     state: {},
@@ -16,6 +17,16 @@ export default {
         },
         async getCourses(context, params) {
             return await axios.get(`${course_api}`, params = {params})
+                .then((response) => {
+                    return response.data
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return null
+                })
+        },
+        async getCoursesNoPaginate(context, params) {
+            return await axios.get(`${course_api_no_page}`, params = {params})
                 .then((response) => {
                     return response.data
                 })

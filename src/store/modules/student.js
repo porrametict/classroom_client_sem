@@ -11,6 +11,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error)
+                    context.dispatch("error/setError", error.response.data, {root: true});
                     return null
                 })
         },
