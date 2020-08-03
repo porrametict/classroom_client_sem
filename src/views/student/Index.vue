@@ -33,7 +33,7 @@
                             <v-btn
                                 icon
                                 color="orange lighten-2"
-                                @click="$router.push({name:'EditStudent'})"
+                                @click="gotoEdit(item.id)"
                             >
                                 <v-icon>mdi-pencil</v-icon>
                             </v-btn>
@@ -113,6 +113,14 @@
             changePage(page){
               this.form_params.page = page
                 this.loadData()
+            },
+            gotoEdit(id) {
+              this.$router.push({
+                name: 'EditStudent',
+                params: {
+                  id: id,
+                },
+              });
             },
             async deleteStudent(e, item){
                 console.log(e,"e",item)

@@ -1,48 +1,64 @@
 <template>
-    <div>
+  <div>
 
-        <v-autocomplete
-                v-model="course"
-                :items="courses"
-                color="white"
-                :filter="customFilter"
-                hide-no-data
-                hide-selected
-                item-text="course_id"
-                label="Course ID"
-                return-object
-                rounded
-                filled
-                @change="$emit('change',course)"
-        ></v-autocomplete>
+    <v-autocomplete
+        v-model="course"
+        :items="courses"
+        color="white"
+        :filter="customFilter"
+        hide-no-data
+        hide-selected
+        item-text="course_id"
+        label="Course ID"
+        return-object
+        rounded
+        filled
+        :disabled="disabled"
+        @change="$emit('change',course)"
+    ></v-autocomplete>
 
-    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "CourseSelect",
-        data: () => ({
-            courses: [],
-            course : null,
-        }),
-        mounted() {
-            this.loadData()
-        },
-        methods: {
-            async loadData() {
-                let data = await this.$store.dispatch('course/getCoursesNoPaginate')
-                this.courses = data
-            },
-            customFilter(item,queryText,itemText) {
-                const  textOne = item.course_id.toLocaleLowerCase()
-                const  searchText = queryText.toLowerCase()
-
-                return textOne.indexOf(searchText) >- 1
-            },
-
-        }
+export default {
+  name: "CourseSelect",
+  props: {
+    disabled:{
+      type: Boolean,
+      require: false
+    },
+    value:{
+      type: Number,
+      require: false,
+      default: null
     }
+  },
+  data: () => ({
+    courses: [],
+    course : null,
+  }),
+  created() {
+    this.course = this.value
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    async loadData() {
+      let data = await this.$store.dispatch('course/getCoursesNoPaginate')
+      console.log('A')
+      this.courses = data
+    },
+    customFilter(item,queryText,itemText) {
+      const  textOne = item.course_id.toLocaleLowerCase()
+      const  searchText = queryText.toLowerCase()
+
+      return textOne.indexOf(searchText) >- 1
+    },
+
+  }
+}
 </script>
 
 <style scoped>

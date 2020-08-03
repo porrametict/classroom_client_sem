@@ -9,7 +9,7 @@
       <v-card class="ma-5" min-width="500" elevation="0">
         <div>
           <CourseSelect @change="CourseChange"
-                        :rules="[rules.required]">
+                        >
           </CourseSelect>
         </div>
         <div>
@@ -49,7 +49,7 @@ import CourseSelect from "../../components/student/CourseSelect";
 import DatePickerInput from "../../components/share/DatePickerInput";
 import Base from "@/components/share/Base";
 export default {
-  extend: Base,
+  extends: Base,
   name: "createStudent",
   components: {
     DatePickerInput,
