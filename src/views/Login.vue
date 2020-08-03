@@ -14,7 +14,7 @@
                         md="4"
                 >
                     <div class="text-center mb-12">
-                        <p class="display-3 grey--text text--darken-2">Classroom</p>
+                        <p class="display-3 grey--text text--darken-2">Project Name</p>
                     </div>
                     <v-card class="elevation-0">
                         <v-card-text>
@@ -84,8 +84,8 @@
             return {
                 show_password: false,
                 form: {
-                    username: 'admin',
-                    password: 'password'
+                    username: '',
+                    password: ''
                 },
                 rules: {
                     required: value => !!value || 'Required'

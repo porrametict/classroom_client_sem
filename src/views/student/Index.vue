@@ -33,7 +33,7 @@
                             <v-btn
                                 icon
                                 color="orange lighten-2"
-                                @click="$router.push({name:'EditStudent'})"
+                                @click="gotoEdit(item.id)"
                             >
                                 <v-icon>mdi-pencil</v-icon>
                             </v-btn>
@@ -122,6 +122,14 @@
                         await this.loadData()
                     }
                 }
+            },
+            gotoEdit(id) {
+                this.$router.push({
+                    name: 'EditStudent',
+                    params: {
+                        id: id,
+                    },
+                });
             },
         }
 
