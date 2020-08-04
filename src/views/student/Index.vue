@@ -114,14 +114,6 @@
               this.form_params.page = page
                 this.loadData()
             },
-            gotoEdit(id) {
-              this.$router.push({
-                name: 'EditStudent',
-                params: {
-                  id: id,
-                },
-              });
-            },
             async deleteStudent(e, item){
                 console.log(e,"e",item)
                 if (e) {
