@@ -4,6 +4,7 @@
     <v-autocomplete
         v-model="course"
         :items="courses"
+        item-value="id"
         color="white"
         :filter="customFilter"
         hide-no-data

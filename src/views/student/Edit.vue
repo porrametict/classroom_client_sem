@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="form">
     <!-- title-->
     <div class="d-flex justify-space-around flex-wrap">
       <h1>EditStudent</h1>
