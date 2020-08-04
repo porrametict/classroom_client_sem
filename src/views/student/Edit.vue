@@ -84,7 +84,7 @@ export default {
       this.form.enroll_date = this.$moment(e).format()
     },
     async editStudent() {
-      console.log(this.form,'edit')
+      this.form.enroll_date = this.$moment(this.form.enroll_date).format()
       let data = await this.$store.dispatch("student/updateStudent", this.form);
       if (data) {
         await this.$router.push({name: "IndexStudent"});
