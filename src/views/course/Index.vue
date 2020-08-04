@@ -53,7 +53,7 @@ export default {
 
       headers: [
         { text: "Course ID", value: "course_id", align: "start" },
-        { text: "Full Name", value: "name" },
+        { text: "Corse Name", value: "name" },
         { text: "Teacher Name", value: "teacher_name" },
         { text: "Status", value: "status" },
         { text: "Manage", value: "actions", sortable: false },
