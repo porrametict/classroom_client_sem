@@ -8,16 +8,16 @@
       <div>
         <template>
           <v-data-table
-            v-if="Courses"
-            :headers="headers"
-            :items="Courses"
-            class="elevation-1"
-            hide-default-footer
+              v-if="Courses"
+              :headers="headers"
+              :items="Courses"
+              class="elevation-1"
+              hide-default-footer
           >
-           <template v-slot:item.status="{ item }">
-            {{item.status ? 'Avaliable':'Unvaliable'}}
+            <template v-slot:item.status="{ item }">
+              {{ item.status ? 'Avaliable' : 'Unvaliable' }}
             </template>
-            <template  v-slot:item.students="{ item }">
+            <template v-slot:item.students="{ item }">
               <v-btn icon>
                 <v-icon color="primary" @click="openDialog(item.id)">mdi-book-account-outline</v-icon>
               </v-btn>
@@ -32,27 +32,27 @@
             </template>
           </v-data-table>
           <v-pagination
-            v-model="form_param.page"
-            :length="form_param.length"
-            circle
-            @input="changePage"
+              v-model="form_param.page"
+              :length="form_param.length"
+              circle
+              @input="changePage"
           ></v-pagination>
         </template>
       </div>
     </div>
-  <v-row>
-    <v-dialog  v-model="dialog" max-width="640">
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="closeDialog(null)">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Students</v-toolbar-title>
-        </v-toolbar>
-      <student-in-course/>
-      </v-card>
-    </v-dialog>
-  </v-row>
+    <v-row>
+      <v-dialog v-model="dialog" max-width="640">
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click="closeDialog(null)">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Students</v-toolbar-title>
+          </v-toolbar>
+          <student-in-course :key="StudentInCourseKey"/>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
 
@@ -64,20 +64,21 @@ import StudentInCourse from "@/components/course/StudentInCourse";
 
 export default {
   name: "CourseIndex",
-  components: { DeleteDialog, Template, PrimaryButton, StudentInCourse},
+  components: {DeleteDialog, Template, PrimaryButton, StudentInCourse},
   data() {
     return {
+      StudentInCourseKey : 0,
       dialog: false,
       Courses: null,
-      value_course_id:null,
-      form_param: { search: null, page: 1, length: 0 },
+      value_course_id: null,
+      form_param: {search: null, page: 1, length: 0},
       headers: [
-        { text: "Course ID", value: "course_id", align: "start" },
-        { text: "Corse Name", value: "name" },
-        { text: "Teacher Name", value: "teacher_name" },
-        { text: "Status", value: "status" },
-        { text: "Students", value: "students" },
-        { text: "Manage", value: "actions", sortable: false },
+        {text: "Course ID", value: "course_id", align: "start"},
+        {text: "Corse Name", value: "name"},
+        {text: "Teacher Name", value: "teacher_name"},
+        {text: "Status", value: "status"},
+        {text: "Students", value: "students"},
+        {text: "Manage", value: "actions", sortable: false},
       ],
     };
   },
@@ -88,7 +89,7 @@ export default {
     async getCourse() {
       let Courses = await this.$store.dispatch("course/getCourses", this.form_param);
       this.Courses = Courses.results;
-      console.log(this.Courses,'Course')
+      console.log(this.Courses, 'Course')
     },
     async deleteCourse(params, item) {
       if (params) {
@@ -116,12 +117,14 @@ export default {
       this.form_param.page = page;
       this.getCourse();
     },
-    openDialog(id){
+    openDialog(id) {
       this.setCourseID(id)
       this.dialog = true
+      this.StudentInCourseKey += 1
     },
-    closeDialog(id){
+    closeDialog(id) {
       this.setCourseID(id)
+      this.getCourse()
       this.dialog = false
     },
   },

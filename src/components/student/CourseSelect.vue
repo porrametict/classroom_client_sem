@@ -2,6 +2,7 @@
   <div>
 
     <v-autocomplete
+        v-model="course"
         :items="courses"
         item-value="id"
         color="white"
@@ -47,7 +48,6 @@ export default {
   methods: {
     async loadData() {
       let data = await this.$store.dispatch('course/getCoursesNoPaginate')
-      console.log('A')
       this.courses = data
     },
     customFilter(item,queryText,itemText) {
@@ -55,7 +55,6 @@ export default {
       const  searchText = queryText.toLowerCase()
       return textOne.indexOf(searchText) >- 1
     },
-
   }
 }
 </script>

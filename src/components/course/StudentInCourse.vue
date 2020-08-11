@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div >
     <!--table-->
     <div>
       <v-data-table
-          v-if="value"
-          v-model="student"
+
+          v-model="students"
           :headers="headers_student"
           :items="students"
           :items-per-page="10"
@@ -93,9 +93,16 @@ export default {
       course_id: state => state.student.course_id,
     }),
   },
-  created() {
-    this.form_params.course_id = this.course_id
-    this.loadData()
+
+  mounted(){
+    if (this.course_id != null){
+      this.form_params.course_id = this.course_id
+      this.loadData()
+      console.log('if')
+    }else {
+      console.log('else')
+      this.students = []
+    }
   },
   methods: {
     async loadData() {
