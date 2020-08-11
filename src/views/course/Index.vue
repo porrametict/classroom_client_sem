@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Courses">
     <!--content-->
     <div>
       <div>
@@ -16,7 +16,12 @@
           >
            <template v-slot:item.status="{ item }">
             {{item.status ? 'Avaliable':'Unvaliable'}}
-            </template> 
+            </template>
+            <template  v-slot:item.students="{ item }">
+              <v-btn icon>
+                <v-icon color="primary" @click="openDialog(item.id)">mdi-book-account-outline</v-icon>
+              </v-btn>
+            </template>
             <template v-slot:item.actions="{ item }">
               <div class="d-flex">
                 <v-btn icon>
@@ -35,6 +40,19 @@
         </template>
       </div>
     </div>
+  <v-row>
+    <v-dialog  v-model="dialog" max-width="640">
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click="closeDialog(null)">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Students</v-toolbar-title>
+        </v-toolbar>
+      <student-in-course/>
+      </v-card>
+    </v-dialog>
+  </v-row>
   </div>
 </template>
 
@@ -42,20 +60,23 @@
 import PrimaryButton from "../../components/share/PrimaryButton";
 import Template from "../Template";
 import DeleteDialog from "../../components/share/DeleteDialog";
+import StudentInCourse from "@/components/course/StudentInCourse";
 
 export default {
   name: "CourseIndex",
-  components: { DeleteDialog, Template, PrimaryButton },
+  components: { DeleteDialog, Template, PrimaryButton, StudentInCourse},
   data() {
     return {
+      dialog: false,
       Courses: null,
+      value_course_id:null,
       form_param: { search: null, page: 1, length: 0 },
-
       headers: [
         { text: "Course ID", value: "course_id", align: "start" },
         { text: "Corse Name", value: "name" },
         { text: "Teacher Name", value: "teacher_name" },
         { text: "Status", value: "status" },
+        { text: "Students", value: "students" },
         { text: "Manage", value: "actions", sortable: false },
       ],
     };
@@ -65,11 +86,9 @@ export default {
   },
   methods: {
     async getCourse() {
-      let Courses = await this.$store.dispatch(
-        "course/getCourses",
-        this.form_param
-      );
+      let Courses = await this.$store.dispatch("course/getCourses", this.form_param);
       this.Courses = Courses.results;
+      console.log(this.Courses,'Course')
     },
     async deleteCourse(params, item) {
       if (params) {
@@ -77,6 +96,12 @@ export default {
         if (data != null) {
           await this.getCourse();
         }
+      }
+    },
+    setCourseID: async function (item) {
+      let course = await this.$store.dispatch("student/setCourse_id", item);
+      if (course) {
+        console.log(course, 'courseInStore')
       }
     },
     gotoEdit(id) {
@@ -87,10 +112,17 @@ export default {
         },
       });
     },
-
     changePage(page) {
       this.form_param.page = page;
       this.getCourse();
+    },
+    openDialog(id){
+      this.setCourseID(id)
+      this.dialog = true
+    },
+    closeDialog(id){
+      this.setCourseID(id)
+      this.dialog = false
     },
   },
 };

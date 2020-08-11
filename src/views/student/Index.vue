@@ -130,15 +130,7 @@
                         await this.loadData()
                     }
                 }
-            },
-            gotoEdit(id) {
-                this.$router.push({
-                    name: 'EditStudent',
-                    params: {
-                        id: id,
-                    },
-                });
-            },
+            }
         }
 
     }
