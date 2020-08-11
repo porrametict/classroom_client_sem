@@ -9,7 +9,7 @@
         :filter="customFilter"
         hide-no-data
         hide-selected
-        item-text="course_id"
+        item-text="name"
         label="Course ID"
         return-object
         rounded
@@ -54,7 +54,6 @@ export default {
     customFilter(item,queryText,itemText) {
       const  textOne = item.course_id.toLocaleLowerCase()
       const  searchText = queryText.toLowerCase()
-
       return textOne.indexOf(searchText) >- 1
     },
 
